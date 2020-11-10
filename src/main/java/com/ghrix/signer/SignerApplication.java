@@ -39,6 +39,7 @@ class Controller {
 
     @PostMapping(value = "/generate", consumes = "application/json", produces = "application/json" )
     public Map<String,String> generateAuth(final Map<String, String> params) throws Exception {
+        System.out.println("Generating Auth for params: " + params);
 
         params.putIfAbsent("access_token", "${access_token}");
         params.putIfAbsent("client_id", "${client_id}");
