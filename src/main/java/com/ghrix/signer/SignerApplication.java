@@ -7,6 +7,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URLEncoder;
@@ -38,7 +39,7 @@ class Controller {
 
 
     @PostMapping(value = "/generate", consumes = "application/json", produces = "application/json" )
-    public Map<String,String> generateAuth(final Map<String, String> params) throws Exception {
+    public Map<String,String> generateAuth(@RequestBody  final Map<String, String> params) throws Exception {
         System.out.println("Generating Auth for params: " + params);
 
         params.putIfAbsent("access_token", "${access_token}");
