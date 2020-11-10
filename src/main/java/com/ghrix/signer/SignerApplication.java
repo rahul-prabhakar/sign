@@ -50,7 +50,6 @@ class Controller {
         params.putIfAbsent("timestamp", "1970-01-01 00:00:00");
         params.putIfAbsent("sign_type", "RSA2");
 
-
         return Map.of("signature", buildSignature(params,
                 params.getOrDefault("private_key", PRIVATE_KEY)));
     }
