@@ -38,8 +38,8 @@ class Controller {
     private static final String PRIVATE_KEY = ""; // your private key
 
 
-    @PostMapping(value = "/generate", consumes = "application/json", produces = "application/json" )
-    public Map<String,String> generateAuth(@RequestBody final Map<String, String> params) throws Exception {
+    @PostMapping(value = "/generate", consumes = "application/json", produces = "application/json")
+    public Map<String, String> generateAuth(@RequestBody final Map<String, String> params) throws Exception {
         System.out.println("Generating Auth for params: " + params);
 
         params.putIfAbsent("access_token", "${access_token}");
@@ -50,11 +50,12 @@ class Controller {
         params.putIfAbsent("charset", "");
         params.putIfAbsent("version", "1.0");
         params.putIfAbsent("timestamp", "1970-01-01 00:00:00");
+        final var privateKey = params.getOrDefault("private_key", PRIVATE_KEY);
 
         params.remove("private_key");
 
         return Map.of("signature", buildSignature(params,
-                params.getOrDefault("private_key", PRIVATE_KEY)));
+                privateKey));
     }
 
 
@@ -72,6 +73,7 @@ class Controller {
         byte[] sign = signature.sign();
         return new String(Base64.encodeBase64(sign));
     }
+
     /**
      * generate content to sign
      */
@@ -100,6 +102,7 @@ class Controller {
         builder.setLength(builder.length() - 1);
         return builder.toString();
     }
+
     /**
      * do url encode
      */
