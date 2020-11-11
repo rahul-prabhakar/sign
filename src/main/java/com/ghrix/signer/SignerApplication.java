@@ -39,7 +39,7 @@ class Controller {
 
 
     @PostMapping(value = "/generate", consumes = "application/json", produces = "application/json" )
-    public Map<String,String> generateAuth(@RequestBody  final Map<String, String> params) throws Exception {
+    public Map<String,String> generateAuth(@RequestBody final Map<String, String> params) throws Exception {
         System.out.println("Generating Auth for params: " + params);
 
         params.putIfAbsent("access_token", "${access_token}");
@@ -50,7 +50,8 @@ class Controller {
         params.putIfAbsent("charset", "");
         params.putIfAbsent("version", "1.0");
         params.putIfAbsent("timestamp", "1970-01-01 00:00:00");
-        params.putIfAbsent("sign_type", "RSA2");
+
+        params.remove("private_key");
 
         return Map.of("signature", buildSignature(params,
                 params.getOrDefault("private_key", PRIVATE_KEY)));
